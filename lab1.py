@@ -1,4 +1,5 @@
 from multiprocessing import Pool
+from random import randint
 
 
 def doubler(number):
@@ -12,28 +13,22 @@ def doubler(number):
     #print(first)
     #print(second)
     if first % 2 == second % 2:
-    #result = first
-    #print(first)
+        #result = first
+        print(number)
         return first
     else:
         return 1
 
 
 
-
-
-
 if __name__ == '__main__':
-    matrix = [[165, 531, 884, 416],
-    [494, 256, 779, 948],
-    [398, 589, 832, 538],
-    [416, 756, 432, 895]]
+    n = randint(2, 10)
+    matrix = [[randint(100, 999) for _ in range(n)] for _ in range(n)]
     print('Original matrix: ' + str(matrix))
     lst = []
     for line in matrix:
         lst += line
     print('Matrix elements: ' + str(lst))
-
     pool = Pool(processes=2)
     result_process = (pool.map(doubler, lst))
     result = 1
