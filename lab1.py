@@ -1,10 +1,11 @@
 from multiprocessing import Pool
 from random import randint
+import os
 
 
 def doubler(number):
     #print(number)
-    result = 1
+    proc = os.getpid()
     #for index in massiv:
     #print(index)
     element = [ int(c) for c in str(number)]
@@ -14,9 +15,10 @@ def doubler(number):
     #print(second)
     if first % 2 == second % 2:
         #result = first
-        print(number)
+        print('In {0} senior rank {1}. Process id: {2}'.format(number, first, proc))
         return first
     else:
+        print('{0} is not valid. Process id: {1}'.format(number, proc))
         return 1
 
 
@@ -32,9 +34,9 @@ if __name__ == '__main__':
     pool = Pool(processes=2)
     result_process = (pool.map(doubler, lst))
     result = 1
-    for k in result_process:
-        result *= k
+    for result_numbers in result_process:
+        result *= result_numbers
     if result == 1:
-        print('Not foud valid numbers in matrix')
+        print('Not found valid numbers in matrix')
     else:
         print('Product of valid numbers: ' + str(result))
