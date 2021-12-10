@@ -2,28 +2,27 @@ from multiprocessing import Pool
 from random import randint
 import os
 
-def potok(lst):
-    potoks = len(lst)//10
+def potok(massiv):
+    potoks = len(massiv)//2+1
     return potoks
 
-def doubler(number):
+def doubler(massiv):
     #print(number)
+    result = 1
     proc = os.getpid()
-    #for index in massiv:
-    #print(index)
-    element = [ int(c) for c in str(number)]
-    first = element[0]
-    second = element[1]
-    #print(first)
-    #print(second)
-    if first % 2 == second % 2:
-        #result = first
-        print('In {0} senior rank {1}. Process id: {2}'.format(number, first, proc))
-        return first
-    else:
-        print('{0} is not valid. Process id: {1}'.format(number, proc))
-        return 1
-
+    for index in massiv:
+        #print(index)
+        element = [ int(c) for c in str(index)]
+        first = element[0]
+        second = element[1]
+        #print(first)
+        #print(second)
+        if first % 2 == second % 2:
+            result *= first
+            print('{0} Product {1} by process id: {2}'.format(massiv, result, proc))
+        if result == 0:
+            return 1
+    return result
 
 
 if __name__ == '__main__':
@@ -34,9 +33,10 @@ if __name__ == '__main__':
     for line in matrix:
         lst += line
     print('Matrix elements: ' + str(lst))
-    current_potoks = potok(lst)
+    current_potoks = potok(matrix)
     pool = Pool(processes=current_potoks)
-    result_process = (pool.map(doubler, lst))
+    print(current_potoks)
+    result_process = (pool.map(doubler, matrix))
     result = 1
     for result_numbers in result_process:
         result *= result_numbers
